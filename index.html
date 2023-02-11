@@ -1,38 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yejun's</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yejun's</title>
 </head>
-  <style>
-        
-  </style>
+<style>
+
+</style>
 
 <body>
-    <h6 style="font-size:30px;margin:0 auto">안녕하세요,김예준입니다!</h6> 
-    <div><span id="order">1</span>번째 참가자</div>
-    <div>제시어: <span id ="word"></span></div>
-    <input type="text">
-    <button>입력</button>
+  <h6 style="font-size:30px;margin:0 auto">안녕하세요,김예준입니다!</h6>
+  <div><span id="order">1</span>번째 참가자</div>
+  <div>제시어: <span id="word"></span></div>
+  <input type="text">
+  <button>입력</button>
   <script>
-    const number = parseInt(prompt('몇 명이 참가하나요?'),10);
-    console.log('number',number)
-    alert (number + "명 맞으신가요?");
-    const yesOrNo = confirm ('맞나요?');
-    
-    document.querySelector('input').addEventListener('input', (event) => {
-      console.log('글자입력', event.target.value);
-    });
+    const number = parseInt(prompt('몇 명이 참가하나요?'), 10);
+    console.log('number', number)
+    alert(number + "명 맞으신가요?");
+    const yesOrNo = confirm('맞나요?');
+    const $word = document.querySelector('#word')
 
-    const onClick = function(){
-      console.log('버튼클릭');
-      return undefined;
+    const $button = document.querySelector('button');
+    const $input = document.querySelector('input');
+    const $order = document.querySelector('#order');
+    let word; //제시어
+    let newword; //새로 입력한 단어
+
+    const onClickButton = () => {
+      if (!word) { //제시어가 비어있는가?
+        //비어있다
+        word = newword;
+        $word.textContent = word;
+        const order = Number($order.textContent);//현재순서
+        if (order + 1 > number) {
+          $order.textContent = 1;
+        } else {
+          $order.textContent = order + 1
+        }
+        $input.value = '';
+        $input.focus();
+      } else {
+        //비어있지않다
+        if (word[word.length - 1] === newword[0]) { //올바른가
+          word = newword;
+          $word.textContent = word;
+          const order = Number($order.textContent);//현재순서
+          if (order + 1 > number) {
+            $order.textContent = 1;
+          } else {
+            $order.textContent = order + 1
+          }
+          $input.value = '';
+        } else { //올바르지 않은가
+            alert('올바르지 않은 단어입니다!');
+        }
+      };
+    };
+    const onInput = (event) => {
+      newword = event.target.value;
+      $input.focus();
     };
 
-    document.querySelector('button').addEventListener('click',onClick);
+    $button.addEventListener('click', onClickButton);
+    $input.addEventListener('input', onInput)
+
+
+
   </script>
-      
+
 </body>
+
 </html>
