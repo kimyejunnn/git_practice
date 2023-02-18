@@ -8,22 +8,26 @@
   <title>Yejun's 쿵쿵따</title>
 </head>
 <style>
-
+  #wrap {text-align:center}
 </style>
 
 <body>
   <h6 style="font-size:30px;margin:0 auto">안녕하세요,김예준입니다!</h6>
-  <div><span id="order">1</span>번째 참가자</div>
-  <div>제시어: <span id="word"></span></div>
-  <input type="text">
-  <button>입력</button>
+  <div id="wrap">
+    <div><span id="order">1</span>번째 참가자</div>
+    <div>제시어: <span id="word"></span></div>
+    <input type="text">
+    <button>입력</button>
+  </div>
   <script>
-    const number = parseInt(prompt('몇 명이 참가하나요?'), 10);
+    const number = Number(prompt('몇 명이 참가하나요?'));
+
+    if (number) {
     console.log('number', number)
     alert(number + "명 맞으신가요?");
     const yesOrNo = confirm('맞나요?');
+    
     const $word = document.querySelector('#word')
-
     const $button = document.querySelector('button');
     const $input = document.querySelector('input');
     const $order = document.querySelector('#order');
@@ -31,7 +35,7 @@
     let newword; //새로 입력한 단어
 
     const onClickButton = () => {
-      if (!word) { //제시어가 비어있는가?
+      if (!word || (word[word.length - 1] === newword[0] && newword.length === 3)) { //제시어가 비어있는가?
         //비어있다
         word = newword;
         $word.textContent = word;
@@ -43,32 +47,18 @@
         }
         $input.value = '';
         $input.focus();
-      } else {
-        //비어있지않다
-        if (word[word.length - 1] === newword[0]) { //올바른가
-          word = newword;
-          $word.textContent = word;
-          const order = Number($order.textContent);//현재순서
-          if (order + 1 > number) {
-            $order.textContent = 1;
-          } else {
-            $order.textContent = order + 1
-          }
-          $input.value = '';
-        } else { //올바르지 않은가
+      } else { //올바르지 않은가
             alert('올바르지 않은 단어입니다!');
         }
       };
-    };
     const onInput = (event) => {
       newword = event.target.value;
       $input.focus();
     };
 
     $button.addEventListener('click', onClickButton);
-    $input.addEventListener('input', onInput)
-
-
+    $input.addEventListener('input', onInput);
+    } 
 
   </script>
 
